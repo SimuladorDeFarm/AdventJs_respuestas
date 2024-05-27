@@ -1,0 +1,127 @@
+/* 
+Para resolver este problema hay que centrarnos en dos casos:
+  1.- cuando la nueva letra es diferente a las demas
+  2.- cuando la nueva letra es igual a una ya existente
+
+para resolver esto se planteó la siguiente solucion:
+
+  Primero para no tener que replicar el codigo dos veces
+  (ya que no se permite crear funciones externas) con variaciones,
+  se generalizó la solucion, siempre habran dos palabras, una corta
+  y una larga, entonces la palabra mas larga se cuado en el vector
+  "largo" y la corta en el vector "corto", ej:
+
+    (original, modified)
+    (abcde   , abcd    ) -> (largo, corto)
+    (abcd    , abcde   ) -> (corto, largo)
+
+  Se crearon dos vectores, el primero guarda la cantidad de
+  veces que aparece una letra del vector largo en el vector
+  corto, a este vector se le llama "sobrante" y tiene el mismo
+  largo que el vector largo ya que si
+  sobra una letra entonces en la pocion de esa letra que sobra
+  habra un 0, ej:
+
+    vector largo -> abcde
+    vector corto -> abcd
+
+    vector sobrante -> [1,1,1,1,0]
+
+  Esto cubre casi todos los casos, expeto si la letra sobrante
+  es igual a una ya existente como en el caso de:
+
+    (aabcd, abcd)
+
+  por esto añadimos otro filtro, se crea un vector llamado
+  "repetido" que tiene el mismo largo que el vector "corto"
+  cuenta la cantidad de veces que aparece
+  una palabra pero desde el vector corto hacia el largo, ej:
+
+    vector corto -> abcd  
+    vector largo -> aabcd
+
+    vector sobrante -> [1,1,1,1,1] -> este metodo no decta
+      ninguna letra sobrante,sin embargo "repetido" si encuentra
+      una anomalia:
+
+    vector repetido -> [2,1,1,1]
+
+  Entonces si no se encuentra una anomalia en "sobrante" se 
+  pasará al siguiente test que lo detectará.
+  
+*/
+
+
+function findNaughtyStep(original, modified) {
+
+  const largoOriginal = original.length;
+  const largoModified = modified.length;
+
+
+  let largo = [], corto = [];
+  let sobrante = [], repetido = [];
+
+  if(largoOriginal != largoModified){
+    
+    if(largoOriginal > largoModified){
+      
+      largo = [...original]
+      corto = [...modified]
+    }
+
+    if(original.length < modified.length){
+
+      largo = [...modified]
+      corto = [...original]
+    }
+
+    for(let i = 0; i < largo.length; i++){
+      sobrante.push(0)
+    }
+
+    for(let j = 0; j < corto.length; j++){
+      repetido.push(0)
+    }
+
+    //sobrante
+    
+    for(let i = 0; i < largo.length; i++){
+
+      for(let j = 0; j < corto.length; j++){
+
+        if(largo[i] == corto[j]){
+          sobrante[i] = sobrante[i] + 1;
+        }
+      }
+    }
+
+    for(let i = 0; i < sobrante.length ;i++){
+
+      if(sobrante[i] == 0)
+        return largo[i]
+    }
+
+    //repetido
+
+    for(let i = 0; i < corto.length ; i++){
+
+      for(let j = 0; j <largo.length ; j++){
+
+        if(corto[i] == largo[j]){
+          repetido[i]  = repetido[i] +1
+        }
+      }
+    }
+    
+    for(let i = 0; i < repetido.length ; i++){
+
+      if(repetido[i] > 1){
+        return corto[i]
+      }
+    }
+
+  }
+
+return ''
+
+}
