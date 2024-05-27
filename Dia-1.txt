@@ -1,0 +1,44 @@
+function findFirstRepeated(gifts) {
+  // guardar que numeros se repiten
+  // si ninguno se repite return -1
+  //  ver que numero se demora menos en repetirse
+
+  //crear vecotr que guarde la segunda ocurrencia
+
+  //recorrer vector gifts
+  //ver que numeros se repiten
+  //guardar la segunda ocurrencia en un vector
+  //si encuentra un numero igual va a guardar la pocion j
+  const seg_ocurrencia = []
+  for(let i = 0; gifts[i] != null; i++){
+
+    for(let j = i+1; gifts[j] != null; j++){
+
+      if(gifts[i] == gifts[j]){
+        seg_ocurrencia.push(j)
+      }
+    }
+  }
+
+  if(seg_ocurrencia[0] == null){
+
+    return -1;
+  }
+  else{
+    let menor = 10000;
+    for(let i = 0; seg_ocurrencia[i] != null; i++){
+      for(let j = 0; seg_ocurrencia[j] != null; j++){
+        
+        if(seg_ocurrencia[i] < menor){
+          menor = seg_ocurrencia[i]
+        }
+      }
+    }
+    
+      return gifts[menor]
+    
+  }
+  //funcion que encuentre el numero menor de un vector
+
+  return 0
+}
