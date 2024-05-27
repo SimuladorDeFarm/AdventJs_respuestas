@@ -1,0 +1,62 @@
+function manufacture(gifts, materials) {
+  
+
+  //descomponer ambos array en strings de caracteres
+  //materiales se descompone en caracteres_materiales[] 
+  //gifts[i] se descompone en caracteres_gifts[]
+  //gifts descompone la primera palabra "tren",  y compara los caracteres 
+  //con el array de materiales y en el caso de que no se encuentre
+  //una coincidencia la variable "coincidencia = true" pasará a ser false
+
+  //if(caracteres_gifts[i] != caracteres_materiales[j]){ coincidencia = false} 
+
+
+  //1.- Crear funcion que convierta materia en un vector
+  //2.- Crear ciclo que convierta la posicion i de gift en un vector
+  //3.- Crear variable coincidencia = false
+  //4.- Crear ciclo que se desplace por caracteres_gifts[]
+  //5.- Crear ciclo anidado que se desplace por caracteres_materiales y que su condicion sea que coincidencia != false
+  //6.- Crear if en el caso de que coincida coincidencia = true
+  //7.- Crear array que contenga las palabras 
+
+
+  //revertirt logica
+  //si no encuentra una coincidencia  
+
+
+  const caracteres_materiales = materials.split('');
+  const regalos = []
+
+
+  for( let x = 0; gifts[x] != null; x++){
+
+
+    const caracteres_gifts = gifts[x].split('');
+    let palabra_existe = true;
+    
+    for(let i = 0; caracteres_gifts[i] != null && palabra_existe != false; i++){
+      
+      let coincidencia = false;
+
+
+      for(let j = 0; caracteres_materiales[j] != null && coincidencia != true; j++){
+
+        if(caracteres_materiales[j] == caracteres_gifts[i]){
+          coincidencia = true
+
+        }
+      
+      }
+
+      if(coincidencia == false){
+        palabra_existe = false;
+      }
+    }
+
+    if(palabra_existe == true){
+      regalos.push(gifts[x])
+    }
+  }
+
+  return regalos
+}
